@@ -40,11 +40,12 @@ function getCommonId() {
 
 function getCommonId2() {
    var localStorageCookie = getCookie('localStorageCookie');
-   var commonId = createUUID();
    if(!localStorageCookie) {
+      var commonId = createUUID();
       setCookie('localStorageCookie', commonId, 5*60*1000);
+      localStorageCookie = commonId;
    }
-   return commonId;
+   return localStorageCookie;
 }
 
 function setCommonId() {
