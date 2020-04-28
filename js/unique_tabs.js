@@ -5,8 +5,7 @@ var CONSTANTS = {
 };
 var commonId = getCommonId();
 var uniqueTabId = getUniqueTabId();
-alert('commonId = ', commonId);
-alert('uniqueTabId = ', uniqueTabId);
+alert('commonId = ' + commonId + '\n' + 'uniqueTabId = ' + uniqueTabId);
 
 function getUniqueTabId() {
   var tabId = sessionStorage.getItem(CONSTANTS.UNIQUE_TAB_ID);
