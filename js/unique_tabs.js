@@ -3,7 +3,7 @@ var CONSTANTS = {
   UNIQUE_TAB_ID: 'dummy_uniqueTabId',
   COMMON_TAB_ID: 'dummy_tabsCommonId',
 };
-var commonId = getCommonId();
+var commonId = getCommonId2();
 var uniqueTabId = getUniqueTabId();
 alert('commonId = ' + commonId + '\n' + 'uniqueTabId = ' + uniqueTabId);
 
@@ -38,6 +38,15 @@ function getCommonId() {
   }
 }
 
+function getCommonId2() {
+   var localStorageCookie = getCookie('localStorageCookie');
+   var commonId = createUUID();
+   if(!localStorageCookie) {
+      setCookie('localStorageCookie', commonId, 5*60*1000);
+   }
+   return commonId;
+}
+
 function setCommonId() {
   var commonId = createUUID();
   localStorage.setItem(CONSTANTS.COMMON_TAB_ID, commonId);
@@ -59,4 +68,27 @@ function createUUID(){
         return (c=='x' ? r :(r&0x3|0x8)).toString(16);
     });
     return uuid;
+}
+
+function getCookie(cname) {
+  var name = cname + "=";
+  var decodedCookie = decodeURIComponent(document.cookie);
+  var ca = decodedCookie.split(';');
+  for(var i = 0; i <ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+
+function setCookie(cname, cvalue, extime) {
+  var d = new Date();
+  d.setTime(d.getTime() + (extime));
+  var expires = "expires="+ d.toUTCString();
+  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 }
